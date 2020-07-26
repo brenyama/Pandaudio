@@ -6,25 +6,19 @@ const apiController = require('../controllers/apiController');
 const chatController = require('../controllers/chatController');
 
 // Create new room and associated song/chat tables.
-router.post(
-  '/rooms',
-  roomController.createRoom,
-  songController.createTable,
-  chatController.createChat,
-  (req, res) => {
-    res.status(200).json(res.locals.room);
-  }
-);
+router.post('/rooms', roomController.createRoom, (req, res) => {
+  res.status(200).json(res.locals.room);
+});
 
 // Get all rooms
 router.get('/rooms', roomController.getAllActive, (req, res) => {
   res.status(200).json(res.locals.activeRooms);
 });
 
-// get songs form queue
+// get songs from queue
 router.get('/rooms/:roomId/songs', songController.getAll, (req, res) => {
-  res.status(200).json(res.locals.roomSongs)
-})
+  res.status(200).json(res.locals.roomSongs);
+});
 // set room to inactive
 router.put('/rooms', roomController.makeInactive, (req, res) => {
   res.sendStatus(200);

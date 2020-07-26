@@ -53,7 +53,7 @@ const Chat = ({ roomId }) => {
     document.getElementById('chatText').value = '';
 
     socket.emit('chat', {
-      room: `chat${roomId}`,
+      room: roomId,
       message: currentMessage,
       uuid,
     });

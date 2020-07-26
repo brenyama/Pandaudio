@@ -24,9 +24,7 @@
   color: black;
 }
 .login-border {
-  border: solid 2px #2a3439;
   padding: 100px 30px;
-  background-color: #808080;
   border-radius: 20px;
   width: 20vh;
   /* text-align: center; */

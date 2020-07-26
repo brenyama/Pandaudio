@@ -4,7 +4,7 @@ CREATE TABLE users (
   id UUID PRIMARY KEY,
   spotify_id VARCHAR(32) NOT NULL,
   username VARCHAR(32) NOT NULL,
-  thumbnail VARCHAR(2100) NOT NULL,
+  thumbnail VARCHAR(2100),
   created_at TIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -14,6 +14,24 @@ CREATE TABLE rooms (
   host UUID REFERENCES users(id) NOT NULL,
   active BOOLEAN DEFAULT 'true',
   created_at TIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE songs (
+  id SERIAL PRIMARY KEY,
+  room_id SERIAL REFERENCES rooms(id) NOT NULL,
+  track VARCHAR(50),
+  artist VARCHAR(50),
+  length INTEGER,
+  thumbnail VARCHAR(100),
+  uri VARCHAR(100)
+);
+
+CREATE TABLE chat (
+  id SERIAL PRIMARY KEY,
+  room_id SERIAL REFERENCES rooms(id) NOT NULL,
+  content VARCHAR(255),
+  owner UUID REFERENCES users(id) NOT NULL,
+  created_at TIMESTAMP default now()
 );
 
 -- Example data

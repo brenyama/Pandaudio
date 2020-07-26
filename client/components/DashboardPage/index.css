@@ -5,7 +5,6 @@
 }
 h1 {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 40px !important;
   color: #ffffff;
   /* left: 5vh !important; */
   width: 10vh;
@@ -14,7 +13,7 @@ h1 {
   color: white !important;
 }
 .dashboard-page {
-  background: #1f1f1f;
+  background: black;
   display: inline-block;
   flex-direction: column;
   justify-content: center;
@@ -75,7 +74,7 @@ button:hover {
   padding-top: 120px;
   /* height: 20vh; */
   width: 20vh;
-  height: 15vh;
+
   margin: 20px 20px !important;
   float: left;
   font-size: 1.5em;

@@ -27,7 +27,7 @@ const App = () => {
 
 
   // checks for if Spotify is accessible then creates a new player
-  const checkForPlayer = () => {
+  const checkForPlayer = async () => {
     if (window.Spotify !== null) {
       clearInterval(playerCheckInterval);
 
@@ -53,7 +53,7 @@ const App = () => {
       });
 
       // intialize the player connection immediatley after intializing
-      newPlayer.connect();
+      await newPlayer.connect();
 
       // NOTE: This is for storing the player in the Store in case window strategy doesn't work
       // dispatch({ type: PLAYER_INITIALIZE, payload: newPlayer });

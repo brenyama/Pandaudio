@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
   },
   paper: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: 'rgb(31, 31, 31)',
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -38,6 +38,8 @@ const DashboardPage = () => {
   };
 
   useEffect(() => {
+    resetPlayer();
+
     axios
       .get('/api/v1/rooms')
       .then(function (response) {
@@ -58,6 +60,13 @@ const DashboardPage = () => {
         console.log(error);
       });
   }, []);
+
+  const resetPlayer = async () => {
+    if (window.globalSpotifyPlayer) {
+      await window.globalSpotifyPlayer.pause();
+      await window.globalSpotifyPlayer.connect();
+    }
+  };
 
   return (
     <div className="dashboard-page">

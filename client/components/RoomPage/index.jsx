@@ -54,7 +54,7 @@ const RoomPage = props => {
     // onload of room post message to websocket asking for the current song URI and time
     if (!isHost) {
       socket.emit('requestPlayInfo', {
-        room: `song${roomInfo.id}`,
+        room: roomInfo.id,
         targetGuest: socket.id,
       });
     }
@@ -84,7 +84,8 @@ const RoomPage = props => {
     });
   }, []);
 
-  const setup = () => {
+  const setup = async () => {
+
     // async call to get all songs and dispatch to songQueue store
 
     fetch(`/api/v1/rooms/${roomInfo.id}/songs`, {
@@ -127,7 +128,7 @@ const RoomPage = props => {
           const tracks = [currentTrack, ...nextTracks];
 
           socket.emit('play', {
-            room: `song${roomInfo.id}`,
+            room: roomInfo.id,
             spotify_uris: tracks.map(track => track.uri),
             start_time: progress_ms,
             targetGuest: requestData.targetGuest,
@@ -191,7 +192,7 @@ const RoomPage = props => {
     }
 
     socket.emit('play', {
-      room: `song${roomInfo.id}`,
+      room: roomInfo.id,
       spotify_uris: uris,
       start_time: playerState.data.position || 0,
     });
@@ -199,7 +200,7 @@ const RoomPage = props => {
 
   const handlePause = e => {
     socket.emit('pause', {
-      room: `song${roomInfo.id}`,
+      room: roomInfo.id,
     });
   };
 
@@ -242,9 +243,7 @@ const RoomPage = props => {
           <p>Back to Lobby</p>
         </div>
         <div className="room-player">
-          <div className="player-cover">
-            {albumArt && <img src={albumArt} />}
-          </div>
+          <div className="player-cover">{albumArt && <img src={albumArt} />}</div>
           <div className="player-content">
             <div className="player-playing">
               <p>{!track_window ? 'Waiting for tunes' : isPaused ? 'Paused' : 'Now Playing'}</p>
@@ -270,9 +269,7 @@ const RoomPage = props => {
         </div>
       </div>
       <div className="sidebar">
-        <div className="room-queue">
-          <h1>Song Queue</h1>
-        </div>
+        <div className="room-queue"></div>
         <div className="room-chat">
           <Chat roomId={roomInfo.id} />
         </div>

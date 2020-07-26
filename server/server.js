@@ -45,16 +45,17 @@ io.on('connection', socket => {
     // Query to get user thumbnail and username to send back to the chat room
     let query = `
       SELECT username, thumbnail FROM users
-      WHERE id = '${data.uuid}'`;
-    const result = await db.query(query);
+      WHERE id = $1`;
+    const result = await db.query(query, [data.uuid]);
     console.log('This is the user data:   ', result.rows);
 
     // Save data to appropriate chat table
-    query = `INSERT INTO ${data.room} (content, owner) VALUES ('${data.message}', '${data.uuid}')`;
-    db.query(query);
+    query = `
+      INSERT INTO chat (room_id, content, owner) VALUES ($1, $2, $3)`;
+    await db.query(query, [data.room, data.message, data.uuid]);
 
     // Emit the appropriate data back to the chat room
-    io.to(data.room).emit('chat', {
+    io.to(`chat${data.room}`).emit('chat', {
       username: result.rows[0].username,
       thumbnail: result.rows[0].thumbnail,
       message: data.message,
@@ -64,19 +65,19 @@ io.on('connection', socket => {
   socket.on('play', async data => {
     console.log('Getting play from room', data);
 
-    io.to(data.room).emit('play', data);
+    io.to(`song${data.room}`).emit('play', data);
   })
 
   socket.on('pause', async data => {
     console.log('Getting pause from room', data);
 
-    io.to(data.room).emit('pause', data);
+    io.to(`song${data.room}`).emit('pause', data);
   })
 
   socket.on('requestPlayInfo', async data => {
     console.log('Getting requestPlayInfo from room', data);
 
-    io.to(data.room).emit('requestPlayInfo', data)
+    io.to(`song${data.room}`).emit('requestPlayInfo', data)
   })
 });
 

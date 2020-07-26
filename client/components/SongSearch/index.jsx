@@ -59,17 +59,19 @@ const SongSearch = props => {
 
   return (
     <div className="songSearch-container">
-      <div className="songSearch-container-dummy-X"><span>X</span></div>
+      <div className="songSearch-container-dummy-X">
+        <span>X</span>
+      </div>
       <div className="songSearch-results-container">
         <h2 className="songSearch-header">Browse Music</h2>
-        <form className='songSearch-form' onSubmit={handleSubmit}>
+        <form className="songSearch-form" onSubmit={handleSubmit}>
           <input
             type="text"
             id="searchbar"
             placeholder="Enter Song"
             value={songName}
             onChange={handleChange}
-            className='songSearch-bar'
+            className="songSearch-bar"
           />
           <input className="songSearch-submit" type="submit" value="SEARCH" />
         </form>
@@ -78,11 +80,9 @@ const SongSearch = props => {
       <div className="songSearch-queue-container">
         <h3 className="songSearch-queue-header">Queue</h3>
         <p className="songSearch-queue-linebreak"></p>
-        {
-          songQueue.data.map(song => {
-            return <p className="songSearch-queue-item">{song.track}</p>
-          })
-        }
+        {songQueue.data.map(song => {
+          return <p className="songSearch-queue-item">{song.track}</p>;
+        })}
       </div>
     </div>
   );
